@@ -1,7 +1,7 @@
 # Automated Appointment Scheduler
 
-The Automated Appointment Scheduler application allows businesses to connect with their clients through an online portal. Businesses are able <br/>
-to register with the website, set up a schedule, and receive appointments from clients. Clients are able to login to the website and choose which businesses<br/>
+The Automated Appointment Scheduler application allows businesses to connect with their clients through an online portal. Businesses are able 
+to register with the website, set up a schedule, and receive appointments from clients. Clients are able to login to the website and choose which businesses
 to set up appointments with and manage those appointments. 
 
 # Technologies
