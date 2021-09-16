@@ -1,0 +1,97 @@
+﻿using FluentAssertions;
+using AAS.Data;
+using AAS.Data.DTOs;
+using AAS.Data.Utilities;
+using AAS.Test.Infrastructure;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Net;
+using System.Net.Http;
+using System.Threading.Tasks;
+using Aas.Data.Utilities;
+
+namespace AAS.Test.Tests.Integration.Group
+{
+    [TestClass]
+    [TestCategory("Groups - Create")]
+    public class CreateGroupTests : BaseGroupTest
+    {
+        [TestMethod]
+        public async Task CreateGroup_ValidDto_Success()
+        {
+            // Arrange
+            var dto = GetGroupDto();
+
+            // Act
+            using var response = await Client.PostAsJsonAsync("/api/groups", dto);
+
+            // Assert
+            var result = await EnsureObject<GroupDto>(response);
+            result.Id.Should().BeGreaterThan(0);
+            result.Name.Should().Be(dto.Name);
+            result.IsActive.Should().Be(dto.IsActive);
+        }
+
+        [DataTestMethod]
+        [DataRow(null)]
+        [DataRow("")]
+        [DataRow(" ")]
+        [DataRow("\t")]
+        public async Task CreateGroup_MissingName_BadRequest(string name)
+        {
+            // Arrange
+            var dto = GetGroupDto();
+            dto.Name = name;
+
+            // Act
+            using var response = await Client.PostAsJsonAsync("/api/groups", dto);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [TestMethod]
+        public async Task CreateGroup_NameTooLong_BadRequest()
+        {
+            // Arrange
+            var dto = GetGroupDto();
+            dto.Name = RandomFactory.GetAlphanumericString(Constants.MaximumLengths.StringColumn + 1);
+
+            // Act
+            using var response = await Client.PostAsJsonAsync("/api/groups", dto);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [TestMethod]
+        public async Task CreateGroup_NameAlreadyExists_BadRequest()
+        {
+            // Arrange
+            Data.Models.Group randomGroup = null;
+            ServiceProvider.ExecuteWithDbScope(db => randomGroup = SeedHelper.GetRandomGroup(db));
+            var dto = GetGroupDto();
+            dto.Name = randomGroup.Name;
+
+            // Act
+            using var response = await Client.PostAsJsonAsync("/api/groups", dto);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.BadRequest);
+        }
+
+        [TestMethod]
+        public async Task CreateGroup_ValidDto_SendsEmail()
+        {
+            // Arrange
+            var dto = GetGroupDto();
+
+            // Act
+            using var response = await Client.PostAsJsonAsync("/api/groups", dto);
+
+            // Assert
+            response.StatusCode.Should().Be(HttpStatusCode.OK);
+
+            GetSentCount().Should().Be(1);
+        }
+    }
+}
