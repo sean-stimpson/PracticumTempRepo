@@ -14,20 +14,20 @@ to set up appointments with and manage those appointments.
 - [AutoMapper](https://github.com/AutoMapper/AutoMapper) handling Entity-to-DTO mapping
 - [Swagger UI](https://github.com/swagger-api/swagger-ui)
 
-#Tools for Development
+# Tools for Development
 
-###IDE's 
+### IDE's 
 
 [**Visual Studio Code**](https://code.visualstudio.com/) - Ideal for front-end development.<br/>
 [**Visual Studio**](https://visualstudio.microsoft.com/) - Can be used for a back-end development. You can use the free community version with this application.<br/>
 [**JetBrains Rider**](https://www.jetbrains.com/rider/) - Can also be used for back-end development. There is no free version, but you can get a student license.<br/>
 
-###Database
+### Database
 
 [**SQL Server Express**](https://docs.microsoft.com/en-us/sql/database-engine/configure-windows/sql-server-express-localdb) - The LocalDB configuration of SQL Server is used for this application. You must be sure to select this feature during the installation in the installation wizard.<br/>
 [**SQL Server Management Studio**](https://docs.microsoft.com/en-us/sql/ssms/download-sql-server-management-studio-ssms?view=sql-server-ver15) - Management studio provides a UI to manage the DB tables. 
 
-###SDK's
+### SDK's
 [**.NET Core SDK**](https://dotnet.microsoft.com/download) - The .NET SDK is required to run the application. This will provide the backend functionality. Download the .NET 5.0 SDK through the link.<br/> 
 [**Node.js LTS**](https://nodejs.org/en) - Node is also required to run the application. Download the recommended package(Currently 14.17.6).
 
